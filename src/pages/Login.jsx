@@ -52,7 +52,7 @@ function Login() {
             <label>DNI</label>
             <input
               type="text"
-              placeholder="Ej: 31981683"
+              placeholder="Ej: 12345678"
               value={dni}
               maxLength={8}
               autoFocus

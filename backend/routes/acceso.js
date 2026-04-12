@@ -14,7 +14,8 @@ router.post('/verificar', async (req, res) => {
 
   try {
     const resultado = await pool.query(
-      'SELECT id, nombre, membresia_estado, membresia_vence FROM usuarios WHERE dni = $1 AND rol = $2',
+      // ✅ AGREGADO foto_url
+      'SELECT id, nombre, membresia_estado, membresia_vence, foto_url FROM usuarios WHERE dni = $1 AND rol = $2',
       [dni, 'socio']
     )
 
@@ -39,7 +40,9 @@ router.post('/verificar', async (req, res) => {
       return res.status(200).json({
         acceso: false,
         nombre: usuario.nombre,
-        mensaje: 'Membresía inactiva o vencida'
+        mensaje: 'Membresía inactiva o vencida',
+        // ✅ OPCIONAL pero ya te lo dejo agregado
+        foto_url: usuario.foto_url || null
       })
     }
 
@@ -52,7 +55,8 @@ router.post('/verificar', async (req, res) => {
       acceso: true,
       nombre: usuario.nombre,
       mensaje: 'Acceso permitido',
-      membresia_vence: usuario.membresia_vence
+      membresia_vence: usuario.membresia_vence,
+      foto_url: usuario.foto_url || null
     })
 
   } catch (err) {

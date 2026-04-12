@@ -12,14 +12,12 @@ function AccesoPublico() {
     setTimeout(() => setVisible(true), 50)
   }, [])
 
-  // Mantiene el foco siempre en el input — el socio tipea directo sin hacer click
   useEffect(() => {
     if (!resultado) {
       inputRef.current?.focus()
     }
   }, [resultado])
 
-  // Limpia el resultado después de 7 segundos y vuelve al input
   useEffect(() => {
     if (resultado) {
       const timer = setTimeout(() => {
@@ -33,7 +31,6 @@ function AccesoPublico() {
   async function verificarAcceso(e) {
     e.preventDefault()
     if (!/^\d{7,8}$/.test(dni)) return
-
     setCargando(true)
     try {
       const respuesta = await api.post('/acceso/verificar', { dni })
@@ -80,6 +77,18 @@ function AccesoPublico() {
           </form>
         ) : (
           <div className={`resultado-acceso ${resultado.acceso ? 'permitido' : 'denegado'}`}>
+            {resultado.foto_url && (
+              <img
+                src={resultado.foto_url}
+                alt={resultado.nombre}
+                className="resultado-foto"
+              />
+            )}
+            {!resultado.foto_url && (
+              <div className="resultado-avatar">
+                {resultado.nombre ? resultado.nombre.charAt(0).toUpperCase() : '?'}
+              </div>
+            )}
             <div className="resultado-icono">
               {resultado.acceso ? '✓' : '✗'}
             </div>

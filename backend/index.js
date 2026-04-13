@@ -11,7 +11,16 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 app.use(express.json())
-app.use(cors())
+
+// CORS configurado para desarrollo y producción
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://softwaregymwall.vercel.app',
+    'https://gymwall.vercel.app'
+  ],
+  credentials: true
+}))
 
 app.use('/api/auth', authRoutes)
 app.use('/api/socios', sociosRoutes)

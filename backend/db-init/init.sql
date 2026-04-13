@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS usuarios (
+  id SERIAL PRIMARY KEY,
+  dni VARCHAR(20) UNIQUE NOT NULL,
+  nombre VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  rol VARCHAR(20) DEFAULT 'socio',
+  plan VARCHAR(20) DEFAULT 'mes',
+  membresia_estado VARCHAR(20) DEFAULT 'inactiva',
+  membresia_vence DATE,
+  telefono VARCHAR(20),
+  foto_url VARCHAR(500),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS registro_accesos (
+  id SERIAL PRIMARY KEY,
+  usuario_id INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
+  dni VARCHAR(20) NOT NULL,
+  resultado VARCHAR(20) NOT NULL,
+  motivo VARCHAR(100),
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

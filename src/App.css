@@ -349,7 +349,7 @@
   background-color: #0d1525;
   border: 1px solid #1e3a5f;
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .tabla { width: 100%; border-collapse: collapse; }
